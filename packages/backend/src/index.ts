@@ -8,6 +8,9 @@ import { mergeResolvers, mergeTypeDefs } from "@graphql-tools/merge";
 import { MyContext } from "./types/graphql.js";
 import greetTypeDefs from "./modules/root/greet/greet.typeDefs.js";
 import greetResolvers from "./modules/root/greet/greet.resolvers.js";
+import makeTodoTypeDefs from "./modules/todos/make-todo/make-todo.typeDefs.js";
+import makeTodoResolvers from "./modules/todos/make-todo/make-todo.resolvers.js";
+import TodoTypeDefs from './modules/root/models/todo.typeDefs.js'
 
 async function main() {
   const PORT = process.env.PORT || 5555;
@@ -15,8 +18,8 @@ async function main() {
 
   const httpServer = http.createServer(app);
   const server = new ApolloServer<MyContext>({
-    typeDefs: mergeTypeDefs([greetTypeDefs]),
-    resolvers: mergeResolvers([greetResolvers]),
+    typeDefs: mergeTypeDefs([greetTypeDefs, makeTodoTypeDefs, TodoTypeDefs]),
+    resolvers: mergeResolvers([greetResolvers, makeTodoResolvers]),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
