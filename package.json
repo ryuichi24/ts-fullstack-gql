@@ -1,0 +1,20 @@
+{
+  "name": "ts-fullstack-gql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:back && npm run build:front",
+    "build:back": "npm run build -w backend",
+    "build:front": "npm run build -w frontend",
+    "dev:back": "npm run dev -w backend",
+    "dev:watch": "npm run watch -w backend",
+    "dev:front": "npm run dev -w frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ]
+}
