@@ -1,0 +1,6 @@
+type Todo {
+  id: String!
+  title: String!
+  updatedAt: String!
+  createdAt: String!
+}

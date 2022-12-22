@@ -1,0 +1,11 @@
+input MakeTodoInput {
+  title: String!
+}
+
+type MakeTodoResponse {
+  todo: Todo!
+}
+
+type Mutation {
+  makeTodo(makeTodoInput: MakeTodoInput!): MakeTodoResponse!
+}
