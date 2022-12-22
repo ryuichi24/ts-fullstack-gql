@@ -1,0 +1,7 @@
+type GetTodosResponse {
+  todos: [Todo]
+}
+
+type Query {
+  getTodos: GetTodosResponse
+}

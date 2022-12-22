@@ -6,10 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon dist/index.js",
-    "watch": "tsc --watch",
+    "watch": "npm run cpgql && tsc --watch",
     "build": "tsc",
     "start": "node dist/index.js",
-    "gen": "graphql-codegen --config codegen.yml",
+    "gen:gql": "graphql-codegen --config codegen.yml",
+    "gen:db": "prisma migrate dev --name",
+    "gui:db": "prisma studio",
     "cpgql": "copyfiles -u 1 src/**/*.graphql ./dist"
   },
   "keywords": [],
