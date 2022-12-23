@@ -7,11 +7,7 @@ export const resolvers: Resolvers<MyContext> = {
       const todos = await prismaClient.todo.findMany();
 
       return {
-        todos: todos.map((todoItem) => ({
-          ...todoItem,
-          updatedAt: todoItem.updatedAt.toISOString(),
-          createdAt: todoItem.createdAt.toISOString(),
-        })),
+        todos,
       };
     },
   },

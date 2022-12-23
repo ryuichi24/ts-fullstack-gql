@@ -8,13 +8,13 @@ export const resolvers: Resolvers<MyContext> = {
         data: {
           title: makeTodoInput.title,
         },
-      });      
+      });
       return {
         todo: {
           ...newTodo,
-          updatedAt: newTodo.updatedAt.toISOString(),
-          createdAt: newTodo.createdAt.toISOString()
-        }
+          updatedAt: newTodo.updatedAt,
+          createdAt: newTodo.createdAt,
+        },
       };
     },
   },
