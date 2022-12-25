@@ -8,15 +8,18 @@ type TodoItemProps = {
   todoItem: Todo;
   editTodoTitle: (todoId: string, todoTitle: string) => void;
   removeTodo: (todoId: string) => void;
+  updateTodoCompleteStatus: (todoId: string, isCompleted: boolean) => void;
 };
 
 export const TodoItem: React.FC<TodoItemProps> = ({
   todoItem,
   editTodoTitle,
   removeTodo,
+  updateTodoCompleteStatus,
 }) => {
   const [isTodoTitleEditing, setisTodoTitleEditing] = useState<boolean>(false);
   const [todoTitleInput, setTodoTitleInput] = useState<string>(todoItem.title);
+  const [isCompleted, setIsCompleted] = useState<boolean>(todoItem.isCompleted);
 
   const handleTodoTitleInputChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -28,6 +31,13 @@ export const TodoItem: React.FC<TodoItemProps> = ({
     setisTodoTitleEditing(false);
     if (todoTitleInput === todoItem.title) return;
     editTodoTitle(todoItem.id, todoTitleInput);
+  };
+
+  const handleCompleteTodoCheckboxChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (event) => {
+    updateTodoCompleteStatus(todoItem.id, !isCompleted);
+    setIsCompleted((prev) => !prev);
   };
 
   const handleEditTodoTitleBtn: React.MouseEventHandler<HTMLButtonElement> = (
@@ -50,7 +60,12 @@ export const TodoItem: React.FC<TodoItemProps> = ({
         }`}
       >
         <div className="flex w-full items-center">
-          <input type="checkbox" className="w-4 h-4" />
+          <input
+            checked={isCompleted}
+            type="checkbox"
+            onChange={handleCompleteTodoCheckboxChange}
+            className="w-4 h-4"
+          />
           <div className="flex flex-col ml-4">
             {isTodoTitleEditing ? (
               <>

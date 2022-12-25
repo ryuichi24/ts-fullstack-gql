@@ -17,7 +17,7 @@ function App() {
   const [makeTodoMut, { loading: loadingMakeTodoResult }] =
     useMakeTodoMutation();
   const [removeTodoMut, {}] = useRemoveTodoMutation();
-  const [editTodoMut, {}] = useUpdateTodoMutation();
+  const [updateTodoMut, {}] = useUpdateTodoMutation();
   const { data, loading } = useGetTodosQuery();
 
   const handleTodoTitleInputChange: React.ChangeEventHandler<
@@ -40,7 +40,7 @@ function App() {
   };
 
   const editTodoTitle = (todoId: string, todoTitle: string) => {
-    editTodoMut({
+    updateTodoMut({
       variables: {
         updateTodoInput: {
           todoId,
@@ -58,6 +58,17 @@ function App() {
         },
       },
       refetchQueries: [{ query: GetTodosDocument }],
+    });
+  };
+
+  const updateTodoCompleteStatus = (todoId: string, isCompleted: boolean) => {
+    updateTodoMut({
+      variables: {
+        updateTodoInput: {
+          todoId,
+          isCompleted,
+        },
+      },
     });
   };
 
@@ -91,6 +102,7 @@ function App() {
                 todoItem={todoItem!}
                 editTodoTitle={editTodoTitle}
                 removeTodo={removeTodo}
+                updateTodoCompleteStatus={updateTodoCompleteStatus}
               />
             ))
           )}
