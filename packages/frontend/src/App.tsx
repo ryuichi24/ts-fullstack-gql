@@ -4,6 +4,7 @@ import { TodoItem } from "./components/TodoItem";
 import { Button } from "./components/Elements/Button";
 import { InputField } from "./components/Elements/InputField";
 import { Layout } from "./components/Layout";
+import { Loader } from "./components/Elements/Loader";
 
 const getTodosQuery = gql`
   query GetTodos {
@@ -31,19 +32,27 @@ function App() {
               placeholder="buy some food..."
               className="flex flex-col mb-6"
             />
-            <Button size="sm">Add Todo</Button>
+            <Button size="sm" isLoading={false}>
+              Add Todo
+            </Button>
           </form>
         </div>
 
         <div>
-          {data?.getTodos.todos.map((todoItem: any) => (
-            <TodoItem
-              key={todoItem.id}
-              todoItem={todoItem}
-              onEditBtnClick={() => ({})}
-              onRemoveBtnClick={() => ({})}
-            />
-          ))}
+          {loading ? (
+            <div className="flex justify-center mt-9">
+              <Loader color="#2563eb" size={10} />
+            </div>
+          ) : (
+            data?.getTodos.todos.map((todoItem: any) => (
+              <TodoItem
+                key={todoItem.id}
+                todoItem={todoItem}
+                onEditBtnClick={() => ({})}
+                onRemoveBtnClick={() => ({})}
+              />
+            ))
+          )}
         </div>
       </div>
     </Layout>

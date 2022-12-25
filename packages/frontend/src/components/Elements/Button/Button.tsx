@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "../Spinner";
+import { Loader } from "../Loader";
 
 const variants = {
   primary: "bg-blue-600 text-white",
@@ -32,7 +32,13 @@ export const Button: React.FC<ButtonProps> = ({
       className={`${className} ${variants[variant]} ${sizes[size]} hover:opacity-80 border border-gray-300 rounded-md`}
       {...props}
     >
-      {isLoading ? <Spinner /> : <span>{children}</span>}
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <Loader variant="moon" size={15.5} color={"white"} />
+        </div>
+      ) : (
+        <span>{children}</span>
+      )}
     </button>
   );
 };
