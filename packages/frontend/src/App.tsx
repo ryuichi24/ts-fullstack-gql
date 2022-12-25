@@ -69,6 +69,7 @@ function App() {
           isCompleted,
         },
       },
+      refetchQueries: [{ query: GetTodosDocument }],
     });
   };
 
