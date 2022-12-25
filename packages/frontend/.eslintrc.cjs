@@ -17,8 +17,12 @@ module.exports = {
     sourceType: "module",
     // eslint-disable-next-line no-undef
     tsconfigRootDir: __dirname,
-    project: ["tsconfig.eslint.json"]
+    project: ["tsconfig.eslint.json"],
   },
   plugins: ["react", "@typescript-eslint"],
-  rules: {},
+  rules: {
+    "no-empty-pattern": "off",
+    "@typescript-eslint/ban-types": "off",
+    "react/prop-types": "off",
+  },
 };

@@ -1,0 +1,67 @@
+import React, { useMemo } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
+import { DropdownMenu } from "./Elements/DropdownMenu";
+
+type TodoItemProps = {
+  todoItem: any;
+  onEditBtnClick: any;
+  onRemoveBtnClick: any;
+};
+
+export const TodoItem: React.FC<TodoItemProps> = ({
+  todoItem,
+  onEditBtnClick,
+  onRemoveBtnClick,
+}) => {
+  const isCompleted = useMemo(() => todoItem.isCompleted, [todoItem]);
+  return (
+    <>
+      <div
+        className={`flex justify-between my-4 px-4 h-20 items-center shadow-sm bg-white rounded border-l-8 ${
+          isCompleted ? "border-emerald-500" : "border-blue-600"
+        }`}
+      >
+        <div className="flex flex-col">
+          <p
+            className={`w-full  ${
+              isCompleted ? "text-emerald-500 line-through" : "text-slate-600"
+            }`}
+          >
+            {todoItem.title}
+          </p>
+          <small className="text-gray-400">
+            {todoItem.createdAt.split("T")[0]}
+          </small>
+        </div>
+
+        <DropdownMenu
+          clickTarget={
+            <small className="text-gray-500 hover:bg-gray-100 p-1 rounded-full">
+              •••
+            </small>
+          }
+          menuItems={[
+            <div key={1}>
+              <button
+                onClick={onEditBtnClick}
+                className="flex justify-between items-center w-full h-hull text-start text-slate-600"
+              >
+                <span>Edit</span>
+                <AiOutlineEdit />
+              </button>
+            </div>,
+            <button
+              key={2}
+              onClick={onRemoveBtnClick}
+              className="flex justify-between items-center w-full h-hull text-start"
+            >
+              <span className="text-red-400">Remove</span>
+              <BiTrash />
+            </button>,
+          ]}
+        />
+      </div>
+    </>
+  );
+};
