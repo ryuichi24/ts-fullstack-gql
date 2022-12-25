@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import { DropdownMenu } from "./Elements/DropdownMenu";
@@ -14,18 +14,19 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   onEditBtnClick,
   onRemoveBtnClick,
 }) => {
-  const isCompleted = useMemo(() => todoItem.isCompleted, [todoItem]);
   return (
     <>
       <div
         className={`flex justify-between my-4 px-4 h-20 items-center shadow-sm bg-white rounded border-l-8 ${
-          isCompleted ? "border-emerald-500" : "border-blue-600"
+          todoItem.isCompleted ? "border-emerald-500" : "border-blue-600"
         }`}
       >
         <div className="flex flex-col">
           <p
             className={`w-full  ${
-              isCompleted ? "text-emerald-500 line-through" : "text-slate-600"
+              todoItem.isCompleted
+                ? "text-emerald-500 line-through"
+                : "text-slate-600"
             }`}
           >
             {todoItem.title}
