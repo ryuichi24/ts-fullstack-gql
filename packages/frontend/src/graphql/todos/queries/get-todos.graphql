@@ -1,0 +1,11 @@
+query GetTodos {
+  getTodos {
+    todos {
+      id
+      title
+      isCompleted
+      createdAt
+      updatedAt
+    }
+  }
+}

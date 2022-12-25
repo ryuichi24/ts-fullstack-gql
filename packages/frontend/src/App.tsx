@@ -1,27 +1,13 @@
 import React from "react";
-import { gql, useQuery } from "@apollo/client";
 import { TodoItem } from "./components/TodoItem";
 import { Button } from "./components/Elements/Button";
 import { InputField } from "./components/Elements/InputField";
 import { Layout } from "./components/Layout";
 import { Loader } from "./components/Elements/Loader";
-
-const getTodosQuery = gql`
-  query GetTodos {
-    getTodos {
-      todos {
-        title
-        id
-        isCompleted
-        updatedAt
-        createdAt
-      }
-    }
-  }
-`;
+import { useGetTodosQuery } from "./__generated__/graphql";
 
 function App() {
-  const { data, loading, error } = useQuery(getTodosQuery);
+  const { data, loading, error } = useGetTodosQuery();
 
   return (
     <Layout>
@@ -45,9 +31,9 @@ function App() {
               <Loader color="#2563eb" size={10} />
             </div>
           ) : (
-            data?.getTodos.todos.map((todoItem: any) => (
+            data?.getTodos?.todos?.map((todoItem) => (
               <TodoItem
-                key={todoItem.id}
+                key={todoItem?.id}
                 todoItem={todoItem}
                 onEditBtnClick={() => ({})}
                 onRemoveBtnClick={() => ({})}
