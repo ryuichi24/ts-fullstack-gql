@@ -29,6 +29,7 @@ function App() {
         <div className="rounded shadow p-6 bg-white">
           <form className="flex flex-col">
             <InputField
+              labelName="New Todo"
               placeholder="buy some food..."
               className="flex flex-col mb-6"
             />
