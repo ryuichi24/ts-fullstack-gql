@@ -6,13 +6,17 @@ import { Layout } from "./components/Layout";
 import { Loader } from "./components/Elements/Loader";
 import {
   GetTodosDocument,
+  Todo,
   useGetTodosQuery,
   useMakeTodoMutation,
+  useRemoveTodoMutation,
 } from "./__generated__/graphql";
 
 function App() {
   const [todoTitle, setTodoTitle] = useState<string>("");
-  const [makeTodo, { loading: loadingMakeTodoResult }] = useMakeTodoMutation();
+  const [makeTodoMut, { loading: loadingMakeTodoResult }] =
+    useMakeTodoMutation();
+  const [removeTodoMut, {}] = useRemoveTodoMutation();
   const { data, loading } = useGetTodosQuery();
 
   const handleTodoTitleInputChange: React.ChangeEventHandler<
@@ -24,7 +28,7 @@ function App() {
   ) => {
     event.preventDefault();
     if (!todoTitle.trim()) return;
-    makeTodo({
+    makeTodoMut({
       variables: {
         makeTodoInput: {
           title: todoTitle,
@@ -32,6 +36,21 @@ function App() {
       },
       refetchQueries: [{ query: GetTodosDocument }],
     }).then(() => setTodoTitle(""));
+  };
+
+  const editTodoTitle = (todoItem: Todo) => {
+    //
+  };
+
+  const removeTodo = (todoItem: Todo) => {
+    removeTodoMut({
+      variables: {
+        removeTodoInput: {
+          todoId: todoItem.id,
+        },
+      },
+      refetchQueries: [{ query: GetTodosDocument }],
+    });
   };
 
   return (
@@ -61,9 +80,9 @@ function App() {
             data?.getTodos?.todos?.map((todoItem) => (
               <TodoItem
                 key={todoItem?.id}
-                todoItem={todoItem}
-                onEditBtnClick={() => ({})}
-                onRemoveBtnClick={() => ({})}
+                todoItem={todoItem!}
+                editTodoTitle={editTodoTitle}
+                removeTodo={removeTodo}
               />
             ))
           )}

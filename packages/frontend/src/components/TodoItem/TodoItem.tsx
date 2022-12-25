@@ -6,15 +6,27 @@ import { Todo } from "../../__generated__/graphql";
 
 type TodoItemProps = {
   todoItem: Todo;
-  onEditBtnClick: React.MouseEventHandler<HTMLButtonElement>;
-  onRemoveBtnClick: React.MouseEventHandler<HTMLButtonElement>;
+  editTodoTitle: (todoItem: Todo) => void;
+  removeTodo: (todoItem: Todo) => void;
 };
 
 export const TodoItem: React.FC<TodoItemProps> = ({
   todoItem,
-  onEditBtnClick,
-  onRemoveBtnClick,
+  editTodoTitle,
+  removeTodo,
 }) => {
+  const handleEditTodoTitleBtn: React.MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    //
+  };
+
+  const handleRemoveTodoBtn: React.MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    removeTodo(todoItem);
+  };
+  
   return (
     <>
       <div
@@ -49,7 +61,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           menuItems={[
             <div key={1}>
               <button
-                onClick={onEditBtnClick}
+                onClick={handleEditTodoTitleBtn}
                 className="flex justify-between items-center w-full h-hull text-start text-slate-600"
               >
                 <span>Edit</span>
@@ -58,7 +70,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
             </div>,
             <button
               key={2}
-              onClick={onRemoveBtnClick}
+              onClick={handleRemoveTodoBtn}
               className="flex justify-between items-center w-full h-hull text-start"
             >
               <span className="text-red-400">Remove</span>
