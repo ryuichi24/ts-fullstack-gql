@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
-import { DropdownMenu } from "./Elements/DropdownMenu";
+import { DropdownMenu } from "../Elements/DropdownMenu";
 
 type TodoItemProps = {
   todoItem: any;
