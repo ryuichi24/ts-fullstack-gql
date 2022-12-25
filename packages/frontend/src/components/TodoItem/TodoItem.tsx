@@ -21,19 +21,22 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           todoItem.isCompleted ? "border-emerald-500" : "border-blue-600"
         }`}
       >
-        <div className="flex flex-col">
-          <p
-            className={`w-full  ${
-              todoItem.isCompleted
-                ? "text-emerald-500 line-through"
-                : "text-slate-600"
-            }`}
-          >
-            {todoItem.title}
-          </p>
-          <small className="text-gray-400">
-            {todoItem.createdAt.split("T")[0]}
-          </small>
+        <div className="flex w-full items-center">
+          <input type="checkbox" className="w-4 h-4" />
+          <div className="flex flex-col ml-4">
+            <p
+              className={`w-full  ${
+                todoItem.isCompleted
+                  ? "text-emerald-500 line-through"
+                  : "text-slate-600"
+              }`}
+            >
+              {todoItem.title}
+            </p>
+            <small className="text-gray-400">
+              {todoItem.createdAt.split("T")[0]}
+            </small>
+          </div>
         </div>
 
         <DropdownMenu
