@@ -6,10 +6,10 @@ import { Layout } from "./components/Layout";
 import { Loader } from "./components/Elements/Loader";
 import {
   GetTodosDocument,
-  Todo,
   useGetTodosQuery,
   useMakeTodoMutation,
   useRemoveTodoMutation,
+  useUpdateTodoMutation,
 } from "./__generated__/graphql";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
   const [makeTodoMut, { loading: loadingMakeTodoResult }] =
     useMakeTodoMutation();
   const [removeTodoMut, {}] = useRemoveTodoMutation();
+  const [editTodoMut, {}] = useUpdateTodoMutation();
   const { data, loading } = useGetTodosQuery();
 
   const handleTodoTitleInputChange: React.ChangeEventHandler<
@@ -38,15 +39,22 @@ function App() {
     }).then(() => setTodoTitle(""));
   };
 
-  const editTodoTitle = (todoItem: Todo) => {
-    //
+  const editTodoTitle = (todoId: string, todoTitle: string) => {
+    editTodoMut({
+      variables: {
+        updateTodoInput: {
+          todoId,
+          title: todoTitle,
+        },
+      },
+    });
   };
 
-  const removeTodo = (todoItem: Todo) => {
+  const removeTodo = (todoId: string) => {
     removeTodoMut({
       variables: {
         removeTodoInput: {
-          todoId: todoItem.id,
+          todoId,
         },
       },
       refetchQueries: [{ query: GetTodosDocument }],

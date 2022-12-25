@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import { DropdownMenu } from "../Elements/DropdownMenu";
@@ -6,8 +6,8 @@ import { Todo } from "../../__generated__/graphql";
 
 type TodoItemProps = {
   todoItem: Todo;
-  editTodoTitle: (todoItem: Todo) => void;
-  removeTodo: (todoItem: Todo) => void;
+  editTodoTitle: (todoId: string, todoTitle: string) => void;
+  removeTodo: (todoId: string) => void;
 };
 
 export const TodoItem: React.FC<TodoItemProps> = ({
@@ -15,18 +15,33 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   editTodoTitle,
   removeTodo,
 }) => {
+  const [isTodoTitleEditing, setisTodoTitleEditing] = useState<boolean>(false);
+  const [todoTitleInput, setTodoTitleInput] = useState<string>(todoItem.title);
+
+  const handleTodoTitleInputChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (event) => setTodoTitleInput(event.target.value);
+
+  const handleTodoTitleBlur: React.FocusEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    setisTodoTitleEditing(false);
+    if (todoTitleInput === todoItem.title) return;
+    editTodoTitle(todoItem.id, todoTitleInput);
+  };
+
   const handleEditTodoTitleBtn: React.MouseEventHandler<HTMLButtonElement> = (
     event
   ) => {
-    //
+    setisTodoTitleEditing(true);
   };
 
   const handleRemoveTodoBtn: React.MouseEventHandler<HTMLButtonElement> = (
     event
   ) => {
-    removeTodo(todoItem);
+    removeTodo(todoItem.id);
   };
-  
+
   return (
     <>
       <div
@@ -37,15 +52,29 @@ export const TodoItem: React.FC<TodoItemProps> = ({
         <div className="flex w-full items-center">
           <input type="checkbox" className="w-4 h-4" />
           <div className="flex flex-col ml-4">
-            <p
-              className={`w-full  ${
-                todoItem.isCompleted
-                  ? "text-emerald-500 line-through"
-                  : "text-slate-600"
-              }`}
-            >
-              {todoItem.title}
-            </p>
+            {isTodoTitleEditing ? (
+              <>
+                <input
+                  type="text"
+                  value={todoTitleInput}
+                  className="focus:outline-none text-slate-600"
+                  autoFocus
+                  onChange={handleTodoTitleInputChange}
+                  onBlur={handleTodoTitleBlur}
+                />
+              </>
+            ) : (
+              <p
+                className={`w-full  ${
+                  todoItem.isCompleted
+                    ? "text-emerald-500 line-through"
+                    : "text-slate-600"
+                }`}
+              >
+                {todoItem.title}
+              </p>
+            )}
+
             <small className="text-gray-400">
               {todoItem.createdAt.toISOString().split("T")[0]}
             </small>
