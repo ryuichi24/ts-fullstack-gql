@@ -2,11 +2,12 @@ import React from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import { DropdownMenu } from "../Elements/DropdownMenu";
+import { Todo } from "../../__generated__/graphql";
 
 type TodoItemProps = {
-  todoItem: any;
-  onEditBtnClick: any;
-  onRemoveBtnClick: any;
+  todoItem: Todo;
+  onEditBtnClick: React.MouseEventHandler<HTMLButtonElement>;
+  onRemoveBtnClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 export const TodoItem: React.FC<TodoItemProps> = ({
@@ -34,7 +35,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
               {todoItem.title}
             </p>
             <small className="text-gray-400">
-              {todoItem.createdAt.split("T")[0]}
+              {todoItem.createdAt.toISOString().split("T")[0]}
             </small>
           </div>
         </div>
