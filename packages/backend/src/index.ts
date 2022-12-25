@@ -2,6 +2,7 @@ import http from "http";
 
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
 import express from "express";
 import { PrismaClient } from "@prisma/client";
@@ -24,6 +25,9 @@ async function main() {
 
   await server.start();
 
+  // global middle must be come before expressMiddleware
+  app.use(cors({ origin: ["http://localhost:5173"] }));
+
   app.use(express.json());
 
   app.use(
@@ -43,6 +47,6 @@ async function main() {
 
 main().catch(async (err) => {
   console.error(err);
-  await prismaClient.$disconnect()
+  await prismaClient.$disconnect();
   process.exit(1);
 });
