@@ -1,25 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { TodoItem } from "./components/TodoItem";
 import { Button } from "./components/Elements/Button";
 import { InputField } from "./components/Elements/InputField";
 import { Layout } from "./components/Layout";
 import { Loader } from "./components/Elements/Loader";
-import { useGetTodosQuery } from "./__generated__/graphql";
+import {
+  GetTodosDocument,
+  useGetTodosQuery,
+  useMakeTodoMutation,
+} from "./__generated__/graphql";
 
 function App() {
-  const { data, loading, error } = useGetTodosQuery();
+  const [todoTitle, setTodoTitle] = useState<string>("");
+  const [makeTodo, { loading: loadingMakeTodoResult }] = useMakeTodoMutation();
+  const { data, loading } = useGetTodosQuery();
+
+  const handleTodoTitleInputChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (event) => setTodoTitle(event.target.value);
+
+  const handleTodoFormSubmit: React.FormEventHandler<HTMLFormElement> = (
+    event
+  ) => {
+    event.preventDefault();
+    if (!todoTitle.trim()) return;
+    makeTodo({
+      variables: {
+        makeTodoInput: {
+          title: todoTitle,
+        },
+      },
+      refetchQueries: [{ query: GetTodosDocument }],
+    }).then(() => setTodoTitle(""));
+  };
 
   return (
     <Layout>
       <div className="max-w-xl p-7 mx-auto">
         <div className="rounded shadow p-6 bg-white">
-          <form className="flex flex-col">
+          <form onSubmit={handleTodoFormSubmit} className="flex flex-col">
             <InputField
               labelName="New Todo"
               placeholder="buy some food..."
               className="flex flex-col mb-6"
+              value={todoTitle}
+              onChange={handleTodoTitleInputChange}
             />
-            <Button size="sm" isLoading={false}>
+            <Button size="sm" isLoading={loadingMakeTodoResult}>
               Add Todo
             </Button>
           </form>
