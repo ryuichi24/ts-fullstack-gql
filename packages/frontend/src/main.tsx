@@ -11,13 +11,13 @@ const apolloClient = new ApolloClient({
       Todo: {
         fields: {
           createdAt: {
-            read(name) {
-              return new Date(name);
+            read(value) {
+              return new Date(value);
             },
           },
           updatedAt: {
-            read(name) {
-              return new Date(name);
+            read(value) {
+              return new Date(value);
             },
           },
         },
