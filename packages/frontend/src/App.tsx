@@ -4,21 +4,19 @@ import { Button } from "./components/Elements/Button";
 import { InputField } from "./components/Elements/InputField";
 import { Layout } from "./components/Layout";
 import { Loader } from "./components/Elements/Loader";
-import {
-  GetTodosDocument,
-  useGetTodosQuery,
-  useMakeTodoMutation,
-  useRemoveTodoMutation,
-  useUpdateTodoMutation,
-} from "./__generated__/graphql";
+import { useTodos } from "./hooks/useTodos";
 
 function App() {
   const [todoTitle, setTodoTitle] = useState<string>("");
-  const [makeTodoMut, { loading: loadingMakeTodoResult }] =
-    useMakeTodoMutation();
-  const [removeTodoMut, {}] = useRemoveTodoMutation();
-  const [updateTodoMut, {}] = useUpdateTodoMutation();
-  const { data, loading } = useGetTodosQuery();
+  const {
+    todoData,
+    todoLoading,
+    makeTodo,
+    makeTodoLoading,
+    updateTodoTitle,
+    updateTodoCompleteStatus,
+    removeTodo,
+  } = useTodos();
 
   const handleTodoTitleInputChange: React.ChangeEventHandler<
     HTMLInputElement
@@ -28,49 +26,7 @@ function App() {
     event
   ) => {
     event.preventDefault();
-    if (!todoTitle.trim()) return;
-    makeTodoMut({
-      variables: {
-        makeTodoInput: {
-          title: todoTitle,
-        },
-      },
-      refetchQueries: [{ query: GetTodosDocument }],
-    }).then(() => setTodoTitle(""));
-  };
-
-  const editTodoTitle = (todoId: string, todoTitle: string) => {
-    updateTodoMut({
-      variables: {
-        updateTodoInput: {
-          todoId,
-          title: todoTitle,
-        },
-      },
-    });
-  };
-
-  const removeTodo = (todoId: string) => {
-    removeTodoMut({
-      variables: {
-        removeTodoInput: {
-          todoId,
-        },
-      },
-      refetchQueries: [{ query: GetTodosDocument }],
-    });
-  };
-
-  const updateTodoCompleteStatus = (todoId: string, isCompleted: boolean) => {
-    updateTodoMut({
-      variables: {
-        updateTodoInput: {
-          todoId,
-          isCompleted,
-        },
-      },
-      refetchQueries: [{ query: GetTodosDocument }],
-    });
+    makeTodo(todoTitle).then(() => setTodoTitle(""));
   };
 
   return (
@@ -85,23 +41,23 @@ function App() {
               value={todoTitle}
               onChange={handleTodoTitleInputChange}
             />
-            <Button size="sm" isLoading={loadingMakeTodoResult}>
+            <Button size="sm" isLoading={makeTodoLoading}>
               Add Todo
             </Button>
           </form>
         </div>
 
         <div>
-          {loading ? (
+          {todoLoading ? (
             <div className="flex justify-center mt-9">
               <Loader color="#2563eb" size={10} />
             </div>
           ) : (
-            data?.getTodos?.todos?.map((todoItem) => (
+            todoData?.getTodos?.todos?.map((todoItem) => (
               <TodoItem
                 key={todoItem?.id}
                 todoItem={todoItem!}
-                editTodoTitle={editTodoTitle}
+                updateTodoTitle={updateTodoTitle}
                 removeTodo={removeTodo}
                 updateTodoCompleteStatus={updateTodoCompleteStatus}
               />

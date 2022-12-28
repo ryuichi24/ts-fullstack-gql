@@ -6,14 +6,14 @@ import { Todo } from "../../__generated__/graphql";
 
 type TodoItemProps = {
   todoItem: Todo;
-  editTodoTitle: (todoId: string, todoTitle: string) => void;
-  removeTodo: (todoId: string) => void;
-  updateTodoCompleteStatus: (todoId: string, isCompleted: boolean) => void;
+  updateTodoTitle: (id: string, title: string) => void;
+  removeTodo: (id: string) => void;
+  updateTodoCompleteStatus: (id: string, isCompleted: boolean) => void;
 };
 
 export const TodoItem: React.FC<TodoItemProps> = ({
   todoItem,
-  editTodoTitle,
+  updateTodoTitle,
   removeTodo,
   updateTodoCompleteStatus,
 }) => {
@@ -30,7 +30,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   ) => {
     setisTodoTitleEditing(false);
     if (todoTitleInput === todoItem.title) return;
-    editTodoTitle(todoItem.id, todoTitleInput);
+    updateTodoTitle(todoItem.id, todoTitleInput);
   };
 
   const handleCompleteTodoCheckboxChange: React.ChangeEventHandler<
