@@ -7,6 +7,7 @@ import "./index.css";
 const apolloClient = new ApolloClient({
   uri: "http://localhost:5555/graphql",
   cache: new InMemoryCache({
+    // https://www.apollographql.com/docs/react/caching/cache-field-behavior/#the-read-function
     typePolicies: {
       Todo: {
         fields: {
