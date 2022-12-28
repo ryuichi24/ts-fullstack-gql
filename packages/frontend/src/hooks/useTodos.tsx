@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   GetTodosDocument,
   useGetTodosQuery,
@@ -18,7 +19,7 @@ export const useTodos = () => {
 
   const makeTodo = async (title: string) => {
     try {
-      if (isEmptyStr(title)) return alert("title is empty...");
+      if (isEmptyStr(title)) return toast.error("The title is empty...");
 
       await makeTodoMut({
         variables: {
@@ -28,6 +29,8 @@ export const useTodos = () => {
         },
         refetchQueries: [{ query: GetTodosDocument }],
       });
+
+      toast.success("A new todo has been created.");
     } catch (error) {
       if (isError(error)) return alert(error.message);
     }
@@ -35,7 +38,7 @@ export const useTodos = () => {
 
   const updateTodoTitle = async (id: string, title: string) => {
     try {
-      if (isEmptyStr(title)) return alert("title is empty...");
+      if (isEmptyStr(title)) return toast.error("The title is empty...");
 
       await updateTodoMut({
         variables: {
@@ -45,6 +48,8 @@ export const useTodos = () => {
           },
         },
       });
+
+      toast.success("The todo has been updated.");
     } catch (error) {
       if (isError(error)) return alert(error.message);
     }
@@ -52,7 +57,7 @@ export const useTodos = () => {
 
   const updateTodoCompleteStatus = async (id: string, isCompleted: boolean) => {
     try {
-      updateTodoMut({
+      await updateTodoMut({
         variables: {
           updateTodoInput: {
             todoId: id,
@@ -61,13 +66,15 @@ export const useTodos = () => {
         },
         refetchQueries: [{ query: GetTodosDocument }],
       });
+
+      toast.success("The todo has been updated.");
     } catch (error) {
       if (isError(error)) return alert(error.message);
     }
   };
 
   const removeTodo = async (id: string) => {
-    removeTodoMut({
+    await removeTodoMut({
       variables: {
         removeTodoInput: {
           todoId: id,
@@ -75,6 +82,8 @@ export const useTodos = () => {
       },
       refetchQueries: [{ query: GetTodosDocument }],
     });
+
+    toast.success("The todo has been removed.");
   };
 
   return {
