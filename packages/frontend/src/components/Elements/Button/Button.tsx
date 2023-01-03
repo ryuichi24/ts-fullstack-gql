@@ -29,7 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${className} ${variants[variant]} ${sizes[size]} hover:opacity-80 border border-gray-300 rounded-md`}
+      className={`${className} ${variants[variant]} ${sizes[size]} hover:opacity-80 border border-gray-300 dark:border-zinc-600 rounded-md`}
       {...props}
     >
       {isLoading ? (

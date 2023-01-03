@@ -7,7 +7,7 @@ type LayoutProps = {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="h-screen bg-gray-100 mx-auto">
+    <div className="h-screen bg-gray-100 dark:bg-zinc-800 mx-auto">
       <Header />
       <div>{children}</div>
     </div>

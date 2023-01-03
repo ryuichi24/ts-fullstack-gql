@@ -55,7 +55,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   return (
     <>
       <div
-        className={`flex justify-between my-4 px-4 h-20 items-center shadow-sm bg-white rounded border-l-8 ${
+        className={`flex justify-between my-4 px-4 h-20 items-center shadow-sm bg-white dark:bg-zinc-700 rounded border-l-8 ${
           todoItem.isCompleted ? "border-emerald-500" : "border-blue-600"
         }`}
       >
@@ -72,7 +72,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
                 <input
                   type="text"
                   value={todoTitleInput}
-                  className="focus:outline-none text-slate-600"
+                  className="focus:outline-none text-slate-600 dark:text-zinc-100"
                   autoFocus
                   onChange={handleTodoTitleInputChange}
                   onBlur={handleTodoTitleBlur}
@@ -83,7 +83,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
                 className={`w-full  ${
                   todoItem.isCompleted
                     ? "text-emerald-500 line-through"
-                    : "text-slate-600"
+                    : "text-slate-600 dark:text-zinc-100"
                 }`}
               >
                 {todoItem.title}
@@ -98,7 +98,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
 
         <DropdownMenu
           clickTarget={
-            <small className="text-gray-500 hover:bg-gray-100 p-1 rounded-full">
+            <small className="text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-600 p-1 rounded-full">
               •••
             </small>
           }
@@ -106,7 +106,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
             <div key={1}>
               <button
                 onClick={handleEditTodoTitleBtn}
-                className="flex justify-between items-center w-full h-hull text-start text-slate-600"
+                className="flex justify-between items-center w-full h-hull"
               >
                 <span>Edit</span>
                 <AiOutlineEdit />
@@ -115,7 +115,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
             <button
               key={2}
               onClick={handleRemoveTodoBtn}
-              className="flex justify-between items-center w-full h-hull text-start"
+              className="flex justify-between items-center w-full h-hull"
             >
               <span className="text-red-400">Remove</span>
               <BiTrash />
