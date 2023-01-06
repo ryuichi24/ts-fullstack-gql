@@ -1,5 +1,8 @@
 import React from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
 import { Todo } from "../../__generated__/graphql";
+import { DropdownMenu } from "../Elements/DropdownMenu";
 
 type TodoItemProps = {
   todoItem: Todo;
@@ -36,9 +39,23 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todoItem }) => {
         </div>
       </div>
 
-      <small className="text-gray-500 hover:bg-gray-100 rounded-full p-1 cursor-pointer">
-        •••
-      </small>
+      <DropdownMenu
+        clickTarget={
+          <small className="text-gray-500 hover:bg-gray-100 rounded-full p-1">
+            •••
+          </small>
+        }
+        menuItems={[
+          <button key={1} className="flex justify-between w-full items-center text-gray-800 cursor-pointer">
+            <span>Edit</span>
+            <AiOutlineEdit />
+          </button>,
+          <button key={2} className="flex justify-between w-full items-center text-red-400 cursor-pointer">
+            <span>Remove</span>
+            <BiTrash />
+          </button>,
+        ]}
+      />
     </article>
   );
 };
