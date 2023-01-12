@@ -1,0 +1,11 @@
+mutation MakeTodo($makeTodoInput: MakeTodoInput!) {
+  makeTodo(makeTodoInput: $makeTodoInput) {
+    todo {
+      id
+      title
+      isCompleted
+      createdAt
+      updatedAt
+    }
+  }
+}
