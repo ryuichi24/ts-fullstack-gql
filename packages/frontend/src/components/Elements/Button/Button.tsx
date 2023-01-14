@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const variants = {
   primary: "bg-blue-600 text-white",
@@ -32,7 +33,13 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
       className={`${className} ${variants[variant]} ${sizes[size]} border border-gray-300 rounded-md hover:opacity-80`}
     >
-      {isLoading ? <div>loading...</div> : <>{children}</>}
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <MoonLoader size={15.5} color="white" />
+        </div>
+      ) : (
+        <>{children}</>
+      )}
     </button>
   );
 };
