@@ -62,7 +62,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
     <article
       className={`flex justify-between items-center shadow-sm bg-white rounded border-l-8 my-4 px-4 h-20 ${
         todoItem?.isCompleted ? "border-emerald-500" : "border-blue-600"
-      }`}
+      } dark:bg-zinc-700`}
       key={todoItem?.id}
     >
       <div className="flex items-center">
@@ -75,7 +75,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
         <div className="flex flex-col ml-4">
           {isTitleEditting ? (
             <input
-              className="focus:outline-none text-slate-600"
+              className="focus:outline-none text-slate-600 dark:bg-zinc-700 dark:text-zinc-100"
               type={"text"}
               value={todoTitleInput}
               onChange={handleTodoTitleInput}
@@ -87,7 +87,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
               className={`${
                 todoItem?.isCompleted
                   ? "text-emerald-500 line-through"
-                  : "text-slate-600"
+                  : "text-slate-600 dark:text-zinc-100"
               }`}
             >
               {todoItem?.title}
@@ -102,7 +102,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
 
       <DropdownMenu
         clickTarget={
-          <small className="text-gray-500 hover:bg-gray-100 rounded-full p-1">
+          <small className="text-gray-500 hover:bg-gray-100 rounded-full p-1 dark:hover:bg-zinc-600">
             •••
           </small>
         }
@@ -110,7 +110,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           <button
             onClick={handleEditTitleBtnClick}
             key={1}
-            className="flex justify-between w-full items-center text-gray-800 cursor-pointer"
+            className="flex justify-between w-full items-center text-gray-800 cursor-pointer dark:text-zinc-100"
           >
             <span>Edit</span>
             <AiOutlineEdit />

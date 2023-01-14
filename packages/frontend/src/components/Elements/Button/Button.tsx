@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`${className} ${variants[variant]} ${sizes[size]} border border-gray-300 rounded-md hover:opacity-80`}
+      className={`${className} ${variants[variant]} ${sizes[size]} border border-gray-300 rounded-md hover:opacity-80 dark:border-zinc-600`}
     >
       {isLoading ? (
         <div className="flex justify-center items-center">
